@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/countriesFragment">
+
+    <fragment
+        android:id="@+id/countriesFragment"
+        android:name="com.example.footballapiapp.screens.countries.CountriesFragment"
+        android:label="countries_fragment"
+        tools:layout="@layout/countries_fragment" >
+        <action
+            android:id="@+id/action_countriesFragment_to_teamsFragment"
+            app:destination="@id/teamsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teamsFragment"
+        android:name="com.example.footballapiapp.screens.teams.TeamsFragment"
+        android:label="teams_fragment"
+        tools:layout="@layout/teams_fragment" >
+        <action
+            android:id="@+id/action_teamsFragment_to_countriesFragment"
+            app:destination="@id/countriesFragment"
+            app:popUpTo="@id/navigation_graph" />
+        <action
+            android:id="@+id/action_teamsFragment_to_infoFragment"
+            app:destination="@id/infoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="com.example.footballapiapp.screens.information.InfoFragment"
+        android:label="info_fragment"
+        tools:layout="@layout/info_fragment" >
+        <action
+            android:id="@+id/action_infoFragment_to_teamsFragment"
+            app:destination="@id/teamsFragment"
+            app:popUpTo="@id/teamsFragment" />
+    </fragment>
+</navigation>
