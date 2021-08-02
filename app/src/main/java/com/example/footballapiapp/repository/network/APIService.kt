@@ -1,7 +1,7 @@
 package com.example.footballapiapp.repository.network
 
-import com.example.footballapiapp.models.network.CountryNM
 import com.example.footballapiapp.models.network.TeamNM
+import com.example.footballapiapp.models.network.CountryNM
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

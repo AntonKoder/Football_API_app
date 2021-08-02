@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.footballapiapp.APP_ACTIVITY
 import com.example.footballapiapp.R
 import com.example.footballapiapp.databinding.CountriesFragmentBinding
+import com.example.footballapiapp.di.components.DaggerFragment
 import com.example.footballapiapp.di.components.DaggerNetworkComponent
 import com.example.footballapiapp.di.components.NetworkComponent
 import com.example.footballapiapp.models.ui.CountryUI
@@ -18,7 +19,7 @@ import com.example.footballapiapp.repository.network.NetworkRepository
 import javax.inject.Inject
 
 
-class CountriesFragment : Fragment() {
+class CountriesFragment : Fragment(), DaggerFragment {
 
     @Inject
     lateinit var networkRepository: NetworkRepository
@@ -31,6 +32,12 @@ class CountriesFragment : Fragment() {
     private lateinit var adapter: CountriesAdapter
     private lateinit var observerOnCountriesList: Observer<List<CountryUI>>
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val networkComponent = getNetworkComponent()
+        networkComponent.injectInCountries(this)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,21 +46,14 @@ class CountriesFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val networkComponent = getNetworkComponent()
-        networkComponent.injectInFragment(this)
-    }
-
     override fun onStart() {
         super.onStart()
-        val someViewModel: CountriesViewModel by viewModels {
+        val vm: CountriesViewModel by viewModels {
             CountriesViewModelFactory(
                 networkRepository
             )
         }
-        viewModel = someViewModel
+        viewModel = vm
 
         adapter = CountriesAdapter()
         binding.countriesRecyclerView.layoutManager = LinearLayoutManager(context)

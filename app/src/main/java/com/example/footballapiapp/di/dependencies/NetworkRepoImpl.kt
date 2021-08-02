@@ -1,5 +1,6 @@
 package com.example.footballapiapp.di.dependencies
 
+import com.example.footballapiapp.models.network.TeamNM
 import com.example.footballapiapp.models.network.CountryNM
 import com.example.footballapiapp.repository.network.APIService
 import com.example.footballapiapp.repository.network.NetworkRepository
@@ -13,6 +14,12 @@ class NetworkRepoImpl @Inject constructor(private val apiService: APIService) : 
     @Throws(IOException::class, RuntimeException::class)
     override suspend fun getCountries(): List<CountryNM> {
         val call = apiService.getCountries()
+        return call.execute().body()!!
+    }
+
+    @Throws(IOException::class, RuntimeException::class)
+    override suspend fun getTeams(countryName: String): List<TeamNM> {
+        val call = apiService.getTeams(countryName)
         return call.execute().body()!!
     }
 }
