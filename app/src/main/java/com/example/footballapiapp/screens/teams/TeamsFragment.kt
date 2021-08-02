@@ -26,16 +26,6 @@ class TeamsFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val bundle = this.arguments
-        var txt: String? = ""
-        if (bundle != null) {
-            txt = bundle.getString(COUNTRY)
-        }
-        binding.teamNameTv.text = txt
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         nullableBinding = null

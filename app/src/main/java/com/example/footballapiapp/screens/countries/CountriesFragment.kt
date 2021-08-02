@@ -65,7 +65,7 @@ class CountriesFragment : Fragment() {
 
         viewModel.countriesList.observe(this, observerOnCountriesList)
 
-        viewModel.getCounries()
+        viewModel.getCountries()
 
         binding.countriesRecyclerView.addOnItemTouchListener(
             RecyclerItemClickListener(
