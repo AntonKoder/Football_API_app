@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/User/AndroidStudioProjects/FootballAPIapp/app/src/main/res/layout/info_fragment.xml" value="0.2833333333333333" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/FootballAPIapp/app/src/main/res/layout/statistcs_fragment.xml" value="0.2833333333333333" />
         <entry key="..\:/Users/User/AndroidStudioProjects/FootballAPIapp/app/src/main/res/layout/team_item.xml" value="0.29074074074074074" />
         <entry key="..\:/Users/User/AndroidStudioProjects/FootballAPIapp/app/src/main/res/layout/teams_fragment.xml" value="0.29074074074074074" />
       </map>

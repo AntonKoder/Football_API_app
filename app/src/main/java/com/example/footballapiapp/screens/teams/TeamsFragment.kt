@@ -8,13 +8,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.footballapiapp.APP_ACTIVITY
+import com.example.footballapiapp.R
+import com.example.footballapiapp.TEAM
 import com.example.footballapiapp.databinding.TeamsFragmentBinding
 import com.example.footballapiapp.di.components.DaggerFragment
 import com.example.footballapiapp.di.components.DaggerNetworkComponent
 import com.example.footballapiapp.di.components.NetworkComponent
 import com.example.footballapiapp.models.ui.TeamUI
 import com.example.footballapiapp.repository.network.NetworkRepository
+import com.example.footballapiapp.screens.countries.COUNTRY
 import com.example.footballapiapp.screens.countries.CountriesViewModelFactory
+import com.example.footballapiapp.screens.countries.RecyclerItemClickListener
 import javax.inject.Inject
 
 class TeamsFragment : Fragment(), DaggerFragment {
@@ -66,6 +71,26 @@ class TeamsFragment : Fragment(), DaggerFragment {
 
         viewModel.getTeams("france")
 
+        binding.teamsRecyclerView.addOnItemTouchListener(
+            RecyclerItemClickListener(
+                requireActivity(),
+                binding.teamsRecyclerView,
+                object : RecyclerItemClickListener.OnItemClickListener {
+
+                    override fun onItemClick(view: View, position: Int) {
+                        val bundle = Bundle()
+                        bundle.putSerializable(
+                            TEAM,
+                            viewModel.teamsLiveData.value?.get(position)
+                        )
+                        APP_ACTIVITY.navController.navigate(
+                            R.id.action_teamsFragment_to_infoFragment,
+                            bundle
+                        )
+                    }
+                })
+        )
+
     }
 
     private fun getNetworkComponent(): NetworkComponent {
@@ -77,6 +102,4 @@ class TeamsFragment : Fragment(), DaggerFragment {
         super.onDestroy()
         nullableBinding = null
     }
-
-
 }
