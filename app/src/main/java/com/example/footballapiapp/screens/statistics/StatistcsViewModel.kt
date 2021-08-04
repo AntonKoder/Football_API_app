@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.footballapiapp.models.network.statistics.toStatisticsUI
 import com.example.footballapiapp.models.ui.StatisticsUI
 import com.example.footballapiapp.models.ui.TeamUI
-import com.example.footballapiapp.models.ui.getFakeStatistics
 import com.example.footballapiapp.repository.network.NetworkRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

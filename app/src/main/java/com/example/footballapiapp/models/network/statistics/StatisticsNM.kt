@@ -38,6 +38,9 @@ fun StatisticsNM.toStatisticsUI(): StatisticsUI {
         this.response.goals.against.total.total.toString(),
         this.response.goals.against.average.home.toString(),
         this.response.goals.against.average.away.toString(),
-        this.response.goals.against.average.total.toString()
+        this.response.goals.against.average.total.toString(),
+        this.response.leagueInfo.name,
+        this.response.leagueInfo.logo,
+        this.response.form
     )
 }

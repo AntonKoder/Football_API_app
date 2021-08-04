@@ -110,6 +110,12 @@ class StatisticsFragment : Fragment() {
             binding.homeGoalsAgainstAverage.text = stat.homeGoalsAgainstAverage
             binding.awayGoalsAgainstAverage.text = stat.awayGoalsAgainstAverage
             binding.totalGoalsAgainstAverage.text = stat.totalGoalsAgainstAverage
+
+            binding.leagueName.text = stat.leagueName
+            Glide.with(requireActivity()).load(stat.leagueImage)
+                .into(binding.leagueImage)
+
+            binding.form.text = stat.form
         }
 
         viewModel.statisticsLiveData.observe(this, observerOnStatistics)

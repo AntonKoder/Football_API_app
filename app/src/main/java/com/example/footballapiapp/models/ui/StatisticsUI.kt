@@ -32,4 +32,9 @@ data class StatisticsUI(
     val homeGoalsAgainstAverage: String,
     val awayGoalsAgainstAverage: String,
     val totalGoalsAgainstAverage: String,
+
+    val leagueName: String,
+    val leagueImage: String,
+
+    val form: String
 )
