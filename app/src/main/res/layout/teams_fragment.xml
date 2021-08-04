@@ -7,10 +7,11 @@
     tools:context=".screens.teams.TeamsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/teams_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/dark_grey"
         app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/teams_recycler_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/team_item" />
