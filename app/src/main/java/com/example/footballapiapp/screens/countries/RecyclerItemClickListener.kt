@@ -13,21 +13,16 @@ class RecyclerItemClickListener(
 ) : RecyclerView.OnItemTouchListener {
 
     //отслеживает какой жест использем (держим или кликаем)
-    private var gestureDetector: GestureDetector
+    private var gestureDetector: GestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
+
+        override fun onSingleTapUp(e: MotionEvent): Boolean {
+            return true
+        }
+
+    })
 
     interface OnItemClickListener {
         fun onItemClick(view: View, position: Int)
-    }
-
-    init {
-        gestureDetector =
-            GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
-
-                override fun onSingleTapUp(e: MotionEvent): Boolean {
-                    return true
-                }
-
-            })
     }
 
     override fun onInterceptTouchEvent(view: RecyclerView, e: MotionEvent): Boolean {

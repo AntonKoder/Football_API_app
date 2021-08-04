@@ -1,20 +1,19 @@
 package com.example.footballapiapp.screens.information
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.example.footballapiapp.APP_ACTIVITY
 import com.example.footballapiapp.R
 import com.example.footballapiapp.TEAM
 import com.example.footballapiapp.databinding.InfoFragmentBinding
-import com.example.footballapiapp.databinding.TeamsFragmentBinding
-import com.example.footballapiapp.models.ui.CountryUI
 import com.example.footballapiapp.models.ui.TeamUI
-import com.example.footballapiapp.screens.teams.TeamsViewModel
 
 class InfoFragment : Fragment() {
 
@@ -56,6 +55,17 @@ class InfoFragment : Fragment() {
         }
 
         viewModel.teamLiveData.observe(this, observerOnTeam)
+
+        binding.teamStatisticsButton.setOnClickListener {
+            navigateToStatistics()
+
+        }
+    }
+
+    private fun navigateToStatistics() {
+        val bundle = Bundle()
+        bundle.putSerializable(TEAM, viewModel.teamLiveData.value)
+        APP_ACTIVITY.navController.navigate(R.id.action_infoFragment_to_statisticsFragment, bundle)
     }
 
     override fun onDestroy() {

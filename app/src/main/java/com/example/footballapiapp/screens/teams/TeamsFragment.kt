@@ -12,17 +12,14 @@ import com.example.footballapiapp.APP_ACTIVITY
 import com.example.footballapiapp.R
 import com.example.footballapiapp.TEAM
 import com.example.footballapiapp.databinding.TeamsFragmentBinding
-import com.example.footballapiapp.di.components.DaggerFragment
 import com.example.footballapiapp.di.components.DaggerNetworkComponent
 import com.example.footballapiapp.di.components.NetworkComponent
 import com.example.footballapiapp.models.ui.TeamUI
 import com.example.footballapiapp.repository.network.NetworkRepository
-import com.example.footballapiapp.screens.countries.COUNTRY
-import com.example.footballapiapp.screens.countries.CountriesViewModelFactory
 import com.example.footballapiapp.screens.countries.RecyclerItemClickListener
 import javax.inject.Inject
 
-class TeamsFragment : Fragment(), DaggerFragment {
+class TeamsFragment : Fragment() {
 
     private lateinit var viewModel: TeamsViewModel
 

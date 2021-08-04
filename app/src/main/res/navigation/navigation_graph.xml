@@ -36,5 +36,18 @@
             android:id="@+id/action_infoFragment_to_teamsFragment"
             app:destination="@id/teamsFragment"
             app:popUpTo="@id/teamsFragment" />
+        <action
+            android:id="@+id/action_infoFragment_to_statisticsFragment"
+            app:destination="@id/statisticsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.example.footballapiapp.screens.statistics.StatisticsFragment"
+        android:label="statistics_fragment"
+        tools:layout="@layout/statistics_fragment" >
+        <action
+            android:id="@+id/action_statisticsFragment_to_infoFragment"
+            app:destination="@id/infoFragment"
+            app:popUpTo="@id/infoFragment" />
     </fragment>
 </navigation>

@@ -21,7 +21,7 @@ class TeamsViewModel(private val networkRepository: NetworkRepository) : ViewMod
         viewModelScope.launch(Dispatchers.IO) {
             val teamsNM: List<TeamNM> = networkRepository.getTeams("France")
             Log.d("TAG", teamsNM.toString())
-            var teamsUI = mutableListOf<TeamUI>()
+            val teamsUI = mutableListOf<TeamUI>()
             for (item in teamsNM) {
                 teamsUI.add(item.toTeamUI())
             }

@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var navController: NavController
     private var nullableBinding: ActivityMainBinding? = null
     //Лайфхак!
-    val binding get() = nullableBinding!!
+    private val binding get() = nullableBinding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

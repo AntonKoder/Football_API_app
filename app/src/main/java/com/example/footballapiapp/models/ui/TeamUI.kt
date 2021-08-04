@@ -15,4 +15,8 @@ data class TeamUI(
     val capacity: String?,
     val surface: String?,
     val image: String?
-) : Serializable
+) : Serializable {
+    fun getTeamId(): String {
+        return logo?.replaceBeforeLast("/", "")?.replaceAfter(".", "")?.dropLast(1)?.drop(1) ?: ""
+    }
+}

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.statistics.StatistcsFragment">
+    tools:context=".screens.statistics.StatisticsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header_constraint"
@@ -22,7 +22,7 @@
             android:textSize="24sp"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/team_logo"
+            app:layout_constraintEnd_toStartOf="@id/team_logo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Arsenal`" />
@@ -75,85 +75,106 @@
 
         <TextView
             style="@style/SimpleTextView"
-            android:text="-" />
+            android:id="@+id/home_matches" />
 
         <TextView
             style="@style/SimpleTextView"
-            android:text="-" />
+            android:id="@+id/away_matches" />
 
         <TextView
             style="@style/SimpleTextView"
-            android:text="-" />
+            android:id="@+id/total_matches" />
 
         <TextView
             style="@style/MyTextViewHeaderStyle"
             android:text="Wins" />
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/home_wins"/>
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/away_wins"/>
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/total_wins"/>
 
         <TextView
             style="@style/MyTextViewHeaderStyle"
             android:text="Draws" />
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/home_draws"/>
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/away_draws"/>
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/total_draws"/>
 
         <TextView
             style="@style/MyTextViewHeaderStyle"
             android:text="Loses" />
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/home_loses"/>
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/away_loses"/>
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/total_loses"/>
 
         <TextView
             style="@style/MyTextViewHeaderStyle"
             android:text="Goals total" />
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/home_goals_total"/>
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/away_goals_total"/>
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/total_goals_total"/>
 
         <TextView
             style="@style/MyTextViewHeaderStyle"
-            android:text="Goals awerage" />
+            android:text="Goals average" />
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/home_goals_average"/>
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/away_goals_average"/>
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/total_goals_average"/>
 
         <TextView
             style="@style/MyTextViewHeaderStyle"
             android:text="Goals against total" />
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/home_against_total"/>
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/away_against_total"/>
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/total_against_total"/>
 
         <TextView
             style="@style/MyTextViewHeaderStyle"
-            android:text="Goals against awerage" />
+            android:text="Goals against average" />
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/home_goals_against_average"/>
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/away_goals_against_average"/>
 
-        <TextView style="@style/SimpleTextView" />
+        <TextView style="@style/SimpleTextView"
+            android:id="@+id/total_goals_against_average"/>
     </GridLayout>
 
 

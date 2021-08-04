@@ -35,13 +35,13 @@ class NetworkModule {
     @Provides
     fun provideGson(): Gson {
         val gsonBuilder = GsonBuilder()
-        return gsonBuilder.create()
+        return gsonBuilder.setLenient().create()
     }
 
     @Provides
     fun provideRetrofit(gson: Gson, client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://188.166.81.86/")
+            .baseUrl("http://188.166.81.86/Football/")
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()

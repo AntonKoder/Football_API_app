@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.footballapiapp.APP_ACTIVITY
 import com.example.footballapiapp.R
 import com.example.footballapiapp.databinding.CountriesFragmentBinding
-import com.example.footballapiapp.di.components.DaggerFragment
 import com.example.footballapiapp.di.components.DaggerNetworkComponent
 import com.example.footballapiapp.di.components.NetworkComponent
 import com.example.footballapiapp.models.ui.CountryUI
@@ -19,7 +18,7 @@ import com.example.footballapiapp.repository.network.NetworkRepository
 import javax.inject.Inject
 
 
-class CountriesFragment : Fragment(), DaggerFragment {
+class CountriesFragment : Fragment(){
 
     @Inject
     lateinit var networkRepository: NetworkRepository

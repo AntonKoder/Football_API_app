@@ -21,8 +21,8 @@ class TeamsAdapter : RecyclerView.Adapter<TeamsAdapter.TeamsViewHolder>() {
     }
 
     class TeamsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val name: TextView = itemView.findViewById<TextView>(R.id.team_name)
-        val logo: ImageView = itemView.findViewById<ImageView>(R.id.team_logo)
+        val name: TextView = itemView.findViewById(R.id.team_name)
+        val logo: ImageView = itemView.findViewById(R.id.team_logo)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeamsViewHolder {

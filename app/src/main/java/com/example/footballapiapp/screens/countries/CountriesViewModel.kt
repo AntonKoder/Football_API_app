@@ -18,7 +18,7 @@ class CountriesViewModel(private val networkRepository: NetworkRepository) : Vie
     fun getCountries() {
         viewModelScope.launch(Dispatchers.IO) {
             val countriesNM = networkRepository.getCountries()
-            var countriesUI = mutableListOf<CountryUI>()
+            val countriesUI = mutableListOf<CountryUI>()
             for (item in countriesNM){
                 countriesUI.add(item.toCountryUI())
             }
