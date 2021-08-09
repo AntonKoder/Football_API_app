@@ -1,21 +1,29 @@
 package com.example.footballapiapp.screens.information
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.footballapiapp.APP_ACTIVITY
 import com.example.footballapiapp.R
+import com.example.footballapiapp.SEASON
 import com.example.footballapiapp.TEAM
 import com.example.footballapiapp.databinding.InfoFragmentBinding
+import com.example.footballapiapp.di.components.DaggerNetworkComponent
+import com.example.footballapiapp.di.components.NetworkComponent
 import com.example.footballapiapp.models.ui.TeamUI
+import com.example.footballapiapp.repository.network.NetworkRepository
+import javax.inject.Inject
 
 class InfoFragment : Fragment() {
+
+    @Inject
+    lateinit var networkRepository: NetworkRepository
 
     private lateinit var viewModel: InfoViewModel
 
@@ -23,7 +31,6 @@ class InfoFragment : Fragment() {
     private val binding get() = nullableBinding!!
 
     private lateinit var observerOnTeam: Observer<TeamUI>
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,9 +40,25 @@ class InfoFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val networkComponent = getNetworkComponent()
+        networkComponent.injectInInfo(this)
+    }
+
+    private fun getNetworkComponent(): NetworkComponent {
+        return DaggerNetworkComponent.builder()
+            .build()
+    }
+
     override fun onStart() {
         super.onStart()
-        viewModel = ViewModelProvider(this).get(InfoViewModel::class.java)
+
+        val vm: InfoViewModel by viewModels {
+            InfoViewModelFactory(networkRepository)
+        }
+        viewModel = vm
+
         val bundle = this.arguments
         if (bundle != null) {
             viewModel.setTeam(bundle.getSerializable(TEAM) as TeamUI)
@@ -58,7 +81,6 @@ class InfoFragment : Fragment() {
 
         binding.teamStatisticsButton.setOnClickListener {
             navigateToStatistics()
-
         }
     }
 
@@ -72,5 +94,4 @@ class InfoFragment : Fragment() {
         super.onDestroy()
         nullableBinding = null
     }
-
 }

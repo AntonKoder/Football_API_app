@@ -20,3 +20,24 @@ data class SeasonNM(
     @SerializedName("14") val year2022: Int,
     @SerializedName("15") val year2023: Int
 )
+
+fun SeasonNM.toList(): List<String> {
+    return listOf(
+        year2008.toString(),
+        year2009.toString(),
+        year2010.toString(),
+        year2011.toString(),
+        year2012.toString(),
+        year2013.toString(),
+        year2014.toString(),
+        year2015.toString(),
+        year2016.toString(),
+        year2017.toString(),
+        year2018.toString(),
+        year2019.toString(),
+        year2020.toString(),
+        year2021.toString(),
+        year2022.toString(),
+        year2023.toString()
+    )
+}

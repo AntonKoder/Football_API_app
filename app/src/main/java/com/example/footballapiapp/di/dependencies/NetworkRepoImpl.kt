@@ -1,10 +1,6 @@
 package com.example.footballapiapp.di.dependencies
 
-import com.example.footballapiapp.models.network.TeamNM
-import com.example.footballapiapp.models.network.CountryNM
-import com.example.footballapiapp.models.network.SeasonNM
-import com.example.footballapiapp.models.network.league.LeagueNM
-import com.example.footballapiapp.models.network.statistics.StatisticsNM
+import com.example.footballapiapp.models.network.*
 import com.example.footballapiapp.repository.network.APIService
 import com.example.footballapiapp.repository.network.NetworkRepository
 import java.io.IOException
@@ -31,8 +27,8 @@ class NetworkRepoImpl @Inject constructor(private val apiService: APIService) : 
         return call.execute().body()!!
     }
 
-    override suspend fun getLeague(season: String, countryName: String, teamId: String): LeagueNM {
-        val call = apiService.getLeague(season, countryName, teamId)
+    override suspend fun getLeagues(countryName: String, teamId: String): List<LeagueNM> {
+        val call = apiService.getLeague(countryName, teamId)
         return call.execute().body()!!
     }
 
@@ -41,7 +37,7 @@ class NetworkRepoImpl @Inject constructor(private val apiService: APIService) : 
         season: String,
         leagueId: String
     ): StatisticsNM {
-        val call = apiService.getStatisticsByTeam(teamId,season,leagueId)
+        val call = apiService.getStatisticsByTeam(teamId, season, leagueId)
         return call.execute().body()!!
     }
 }
