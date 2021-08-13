@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/countriesFragment">
+    app:startDestination="@id/preloaderFragment">
 
     <fragment
         android:id="@+id/countriesFragment"
@@ -49,5 +49,15 @@
             android:id="@+id/action_statisticsFragment_to_infoFragment"
             app:destination="@id/infoFragment"
             app:popUpTo="@id/infoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/preloaderFragment"
+        android:name="com.example.footballapiapp.screens.preloader.PreloaderFragment"
+        android:label="preloader_fragment"
+        tools:layout="@layout/preloader_fragment" >
+        <action
+            android:id="@+id/action_preloaderFragment_to_countriesFragment"
+            app:destination="@id/countriesFragment"
+            app:popUpTo="@id/navigation_graph" />
     </fragment>
 </navigation>
