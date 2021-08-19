@@ -4,12 +4,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.footballapiapp.models.local.UserDB
+import com.example.footballapiapp.repository.local.LocalRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class PreloaderViewModel() : ViewModel() {
+class PreloaderViewModel(private val localRepository: LocalRepository) : ViewModel() {
 
     var urlLiveData = MutableLiveData<String>()
+    var userLiveData = MutableLiveData<UserDB>()
 
     fun getCasino() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -17,10 +20,23 @@ class PreloaderViewModel() : ViewModel() {
         }
     }
 
+    fun saveUser(valid: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            //очищаем БД перед тем как сохранть валидность пользователя
+            localRepository.delete()
+            localRepository.saveUser(UserDB(valid))
+        }
+    }
+
+    fun getUser() {
+        viewModelScope.launch(Dispatchers.IO) {
+            userLiveData.postValue(localRepository.getUser())
+        }
+    }
 }
 
-class PreloaderViewModelFactory() :
+class PreloaderViewModelFactory(private val localRepository: LocalRepository) :
     ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        PreloaderViewModel() as T
+        PreloaderViewModel(localRepository) as T
 }
