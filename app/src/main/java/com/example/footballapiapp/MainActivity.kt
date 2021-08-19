@@ -10,7 +10,6 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var navController: NavController
     private var nullableBinding: ActivityMainBinding? = null
-    //Лайфхак!
     private val binding get() = nullableBinding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {

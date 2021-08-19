@@ -14,7 +14,7 @@ class PreloaderViewModel(private val localRepository: LocalRepository) : ViewMod
     var urlLiveData = MutableLiveData<String>()
     var userLiveData = MutableLiveData<UserDB>()
 
-    fun getCasino() {
+    fun getCasinoRootUrl() {
         viewModelScope.launch(Dispatchers.IO) {
             urlLiveData.postValue("http://46.161.53.135/rcwsmW")
         }

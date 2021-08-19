@@ -48,14 +48,6 @@ class PreloaderFragment : Fragment() {
         return application.appComponent
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        if (savedInstanceState != null)
-            binding.webView.restoreState(savedInstanceState);
-
-    }
-
     override fun onStart() {
         super.onStart()
         val appRoomComponent = getAppRoomComponent()
@@ -69,7 +61,7 @@ class PreloaderFragment : Fragment() {
 
         viewModel.getUser()
 
-        viewModel.getCasino()
+        viewModel.getCasinoRootUrl()
 
         initUserObserver()
 
@@ -78,10 +70,6 @@ class PreloaderFragment : Fragment() {
 
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        binding.webView.saveState(outState)
-        super.onSaveInstanceState(outState)
-    }
 
     private fun initUserObserver() {
         observerOnUser = Observer {
@@ -145,5 +133,10 @@ class PreloaderFragment : Fragment() {
             settings.minimumFontSize = 1
             settings.minimumLogicalFontSize = 1
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        nullableBinding = null
     }
 }
