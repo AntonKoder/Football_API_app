@@ -1,6 +1,7 @@
 package com.example.footballapiapp.screens.preloader
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,12 +11,12 @@ import android.view.KeyEvent.KEYCODE_BACK
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.URLUtil
+import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.webkit.WebResourceError
-import android.webkit.URLUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -26,7 +27,6 @@ import com.example.footballapiapp.databinding.PreloaderFragmentBinding
 import com.example.footballapiapp.di.components.ApplicationComponent
 import com.example.footballapiapp.models.local.UserDB
 import com.example.footballapiapp.repository.local.LocalRepository
-import java.lang.Exception
 import javax.inject.Inject
 
 class PreloaderFragment : Fragment() {
@@ -58,20 +58,27 @@ class PreloaderFragment : Fragment() {
         return application.appComponent
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val appRoomComponent = getAppRoomComponent()
         appRoomComponent.inject(this)
 
         initViewModel()
-        initWebViewObserver()
-
-        binding.webView.setParameters()
-
         viewModel.getUser()
-        viewModel.getCasinoRootUrl()
 
+        if (savedInstanceState != null) {
+            binding.webView.restoreState(savedInstanceState);
+        } else {
+            binding.webView.setParameters()
+            viewModel.getCasinoRootUrl()
+        }
+        initWebViewObserver()
         initUserObserver()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
         initWebViewClient()
     }
 
@@ -94,7 +101,7 @@ class PreloaderFragment : Fragment() {
                 errorResponse: WebResourceResponse?
             ) {
                 when (errorResponse?.statusCode) {
-                    @Suppress("MagicNumber") // ошибка 404 можно вынести в const
+                    @Suppress("MagicNumber") // Ошибка 404, можно вынести в const для красоты
                     404 -> {
                         APP_ACTIVITY.navController.navigate(R.id.action_preloaderFragment_to_countriesFragment)
                         viewModel.saveUser(false)
@@ -103,13 +110,15 @@ class PreloaderFragment : Fragment() {
                 super.onReceivedHttpError(view, request, errorResponse)
             }
 
+            override fun onPageFinished(view: WebView?, url: String) {
+                super.onPageFinished(view, url)
+            }
+
             override fun onReceivedError(
                 view: WebView,
                 request: WebResourceRequest,
                 error: WebResourceError
             ) {
-                Log.d("WW", error.errorCode.toString())
-
                 super.onReceivedError(view, request, error)
             }
 
@@ -133,6 +142,11 @@ class PreloaderFragment : Fragment() {
             binding.webView.loadUrl(it)
         }
         viewModel.urlLiveData.observe(this, observerOnUrl)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        binding.webView.saveState(outState)
     }
 
     private fun initViewModel() {
