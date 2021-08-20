@@ -15,4 +15,3 @@ fun LeagueNM.toLeagueUI(): LeagueUI {
     val seasons = this.seasons.split(",").toList()
     return LeagueUI(this.leagueId, this.leagueName, this.logo, this.country, seasons)
 }
-

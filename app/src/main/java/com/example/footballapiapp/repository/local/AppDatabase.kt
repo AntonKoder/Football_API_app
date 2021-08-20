@@ -11,18 +11,16 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun dao(): Dao
 
-
     companion object {
         private var dbInstanse: AppDatabase? = null
 
         fun getAppDatabaseInstance(context: Context): AppDatabase {
-            if (dbInstanse == null){
+            if (dbInstanse == null) {
                 dbInstanse = Room.databaseBuilder<AppDatabase>(
-                    context.applicationContext, AppDatabase::class.java,"db"
+                    context.applicationContext, AppDatabase::class.java, "db"
                 ).build()
             }
             return dbInstanse!!
         }
     }
-
 }

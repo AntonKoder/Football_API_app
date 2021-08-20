@@ -12,7 +12,6 @@ data class CountryNM(
     val flag: String?
 )
 
-
 fun CountryNM.toCountryUI(): CountryUI {
     return CountryUI(this.name, this.code, this.flag)
 }

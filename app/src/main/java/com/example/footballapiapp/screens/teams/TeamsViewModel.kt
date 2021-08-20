@@ -9,7 +9,6 @@ import com.example.footballapiapp.models.network.TeamNM
 import com.example.footballapiapp.models.network.toTeamUI
 import com.example.footballapiapp.models.ui.TeamUI
 import com.example.footballapiapp.repository.network.NetworkRepository
-import com.example.footballapiapp.screens.countries.CountriesViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

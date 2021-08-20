@@ -1,6 +1,10 @@
 package com.example.footballapiapp.di.dependencies
 
-import com.example.footballapiapp.models.network.*
+import com.example.footballapiapp.models.network.CountryNM
+import com.example.footballapiapp.models.network.LeagueNM
+import com.example.footballapiapp.models.network.SeasonNM
+import com.example.footballapiapp.models.network.StatisticsNM
+import com.example.footballapiapp.models.network.TeamNM
 import com.example.footballapiapp.repository.network.APIService
 import com.example.footballapiapp.repository.network.NetworkRepository
 import java.io.IOException

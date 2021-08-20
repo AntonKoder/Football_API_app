@@ -26,7 +26,6 @@ fun TeamNM.toTeamUI(): TeamUI {
     )
 }
 
-
 data class Team(
 
     @SerializedName("id") val id: String,

@@ -9,6 +9,5 @@ import javax.inject.Singleton
 @Component(modules = [AppModule::class])
 interface ApplicationComponent {
 
-
     fun inject(fr: PreloaderFragment)
 }

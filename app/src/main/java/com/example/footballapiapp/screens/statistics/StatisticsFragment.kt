@@ -21,7 +21,6 @@ import com.example.footballapiapp.models.ui.TeamUI
 import com.example.footballapiapp.repository.network.NetworkRepository
 import javax.inject.Inject
 
-
 class StatisticsFragment : Fragment() {
 
     @Inject
@@ -47,7 +46,8 @@ class StatisticsFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         nullableBinding = StatisticsFragmentBinding.inflate(layoutInflater, container, false)
@@ -93,7 +93,6 @@ class StatisticsFragment : Fragment() {
     private fun createSeasonSpinnerAdapter() {
         binding.leagueSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
             }
 
             override fun onItemSelected(
@@ -112,7 +111,6 @@ class StatisticsFragment : Fragment() {
                         Glide.with(requireActivity()).load(league.logo).into(binding.leagueImage)
                     }
 
-
                     binding.seasonSpinner.adapter = viewModel.leagueLiveData.value?.find {
                         it.name == parent.getItemAtPosition(
                             position
@@ -128,10 +126,8 @@ class StatisticsFragment : Fragment() {
 
                 viewModel.success()
             }
-
         }
     }
-
 
     private fun initViewModel() {
         val vm: StatisticsViewModel by viewModels {
@@ -148,11 +144,9 @@ class StatisticsFragment : Fragment() {
             binding.teamName.text = it.name
             Glide.with(requireActivity()).load(team.logo)
                 .into(binding.teamLogo)
-
         }
         viewModel.teamLiveData.observe(this, observeOnTeam)
     }
-
 
     private fun initLeagueObserver() {
         observerOnLeague = Observer { leaguesList ->
@@ -210,5 +204,4 @@ class StatisticsFragment : Fragment() {
         super.onDestroy()
         nullableBinding = null
     }
-
 }

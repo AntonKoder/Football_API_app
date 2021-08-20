@@ -33,7 +33,8 @@ class TeamsFragment : Fragment() {
     private lateinit var observerOnCountriesList: Observer<List<TeamUI>>
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         nullableBinding = TeamsFragmentBinding.inflate(layoutInflater, container, false)
@@ -87,7 +88,6 @@ class TeamsFragment : Fragment() {
                     }
                 })
         )
-
     }
 
     private fun getNetworkComponent(): NetworkComponent {

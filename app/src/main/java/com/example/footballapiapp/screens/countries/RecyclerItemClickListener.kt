@@ -12,14 +12,14 @@ class RecyclerItemClickListener(
     private val mListener: OnItemClickListener?
 ) : RecyclerView.OnItemTouchListener {
 
-    //отслеживает какой жест использем (держим или кликаем)
-    private var gestureDetector: GestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
+    // отслеживает какой жест использем (держим или кликаем)
+    private var gestureDetector: GestureDetector =
+        GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
 
-        override fun onSingleTapUp(e: MotionEvent): Boolean {
-            return true
-        }
-
-    })
+            override fun onSingleTapUp(e: MotionEvent): Boolean {
+                return true
+            }
+        })
 
     interface OnItemClickListener {
         fun onItemClick(view: View, position: Int)
@@ -35,10 +35,10 @@ class RecyclerItemClickListener(
     }
 
     override fun onTouchEvent(view: RecyclerView, motionEvent: MotionEvent) {
-        //Not implemented
+        // Not implemented
     }
 
     override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
-        //Not implemented
+        // Not implemented
     }
 }

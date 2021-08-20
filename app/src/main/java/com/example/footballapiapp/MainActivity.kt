@@ -22,4 +22,3 @@ class MainActivity : AppCompatActivity() {
 }
 
 lateinit var APP_ACTIVITY: MainActivity
-

@@ -12,7 +12,6 @@ import com.example.footballapiapp.R
 import com.example.footballapiapp.models.ui.CountryUI
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou
 
-
 class CountriesAdapter : RecyclerView.Adapter<CountriesAdapter.CountryViewHolder>() {
 
     private var listCountries = emptyList<CountryUI>()
@@ -42,7 +41,6 @@ class CountriesAdapter : RecyclerView.Adapter<CountriesAdapter.CountryViewHolder
             GlideToVectorYou.justLoadImage(APP_ACTIVITY, listCountries[position].flag?.toUri(), holder.flag)
         }
     }
-
 
     override fun getItemCount(): Int {
         return listCountries.size

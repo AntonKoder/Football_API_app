@@ -1,6 +1,5 @@
 package com.example.footballapiapp.screens.teams
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +34,6 @@ class TeamsAdapter : RecyclerView.Adapter<TeamsAdapter.TeamsViewHolder>() {
         Glide.with(holder.logo.context).load(listTeams[position].logo)
             .into(holder.logo)
     }
-
 
     override fun getItemCount(): Int {
         return listTeams.size

@@ -19,7 +19,7 @@ class CountriesViewModel(private val networkRepository: NetworkRepository) : Vie
         viewModelScope.launch(Dispatchers.IO) {
             val countriesNM = networkRepository.getCountries()
             val countriesUI = mutableListOf<CountryUI>()
-            for (item in countriesNM){
+            for (item in countriesNM) {
                 countriesUI.add(item.toCountryUI())
             }
             countriesUI.map { CountryUI(it.name, it.code, it.flag?.replace("\\", "")) }

@@ -1,6 +1,6 @@
 package com.example.footballapiapp.models.ui
 
-//fun getFakeStatistics(): StatisticsUI {
+// fun getFakeStatistics(): StatisticsUI {
 //    return StatisticsUI(
 //        "1",
 //        "2",
@@ -27,4 +27,4 @@ package com.example.footballapiapp.models.ui
 //        "23",
 //        "24"
 //    )
-//}
+// }

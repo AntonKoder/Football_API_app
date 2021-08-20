@@ -17,8 +17,7 @@ import com.example.footballapiapp.models.ui.CountryUI
 import com.example.footballapiapp.repository.network.NetworkRepository
 import javax.inject.Inject
 
-
-class CountriesFragment : Fragment(){
+class CountriesFragment : Fragment() {
 
     @Inject
     lateinit var networkRepository: NetworkRepository
@@ -38,7 +37,8 @@ class CountriesFragment : Fragment(){
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         nullableBinding = CountriesFragmentBinding.inflate(layoutInflater, container, false)

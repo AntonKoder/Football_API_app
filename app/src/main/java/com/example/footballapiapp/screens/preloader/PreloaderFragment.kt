@@ -10,7 +10,12 @@ import android.view.KeyEvent.KEYCODE_BACK
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.*
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.webkit.WebResourceError
+import android.webkit.URLUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -23,7 +28,6 @@ import com.example.footballapiapp.models.local.UserDB
 import com.example.footballapiapp.repository.local.LocalRepository
 import java.lang.Exception
 import javax.inject.Inject
-
 
 class PreloaderFragment : Fragment() {
 
@@ -41,7 +45,8 @@ class PreloaderFragment : Fragment() {
     lateinit var application: MyApplication
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         nullableBinding = PreloaderFragmentBinding.inflate(layoutInflater, container, false)
@@ -89,6 +94,7 @@ class PreloaderFragment : Fragment() {
                 errorResponse: WebResourceResponse?
             ) {
                 when (errorResponse?.statusCode) {
+                    @Suppress("MagicNumber") // ошибка 404 можно вынести в const
                     404 -> {
                         APP_ACTIVITY.navController.navigate(R.id.action_preloaderFragment_to_countriesFragment)
                         viewModel.saveUser(false)
@@ -114,10 +120,9 @@ class PreloaderFragment : Fragment() {
                 try {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                     startActivity(intent)
-                } catch (e: Exception){
-                    Log.d("err","ERROR! $e")
+                } catch (e: Exception) {
+                    Log.d("err", "ERROR! $e")
                 }
-
                 return true
             }
         }
@@ -147,7 +152,7 @@ class PreloaderFragment : Fragment() {
             settings.minimumLogicalFontSize = 1
             setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
                 if (keyCode == KEYCODE_BACK && event.action == ACTION_UP) {
-                    //Perform Code
+                    // Perform Code
                     if (this.canGoBack()) {
                         this.goBack()
                     } else {

@@ -22,7 +22,7 @@ class PreloaderViewModel(private val localRepository: LocalRepository) : ViewMod
 
     fun saveUser(valid: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            //очищаем БД перед тем как сохранть валидность пользователя
+            // очищаем БД перед тем как сохранть валидность пользователя
             localRepository.delete()
             localRepository.saveUser(UserDB(valid))
         }
