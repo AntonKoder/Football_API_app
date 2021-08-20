@@ -1,8 +1,12 @@
 package com.example.footballapiapp.screens.preloader
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent.ACTION_UP
+import android.view.KeyEvent.KEYCODE_BACK
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +21,7 @@ import com.example.footballapiapp.databinding.PreloaderFragmentBinding
 import com.example.footballapiapp.di.components.ApplicationComponent
 import com.example.footballapiapp.models.local.UserDB
 import com.example.footballapiapp.repository.local.LocalRepository
+import java.lang.Exception
 import javax.inject.Inject
 
 
@@ -54,22 +59,16 @@ class PreloaderFragment : Fragment() {
         appRoomComponent.inject(this)
 
         initViewModel()
-
         initWebViewObserver()
 
         binding.webView.setParameters()
 
         viewModel.getUser()
-
         viewModel.getCasinoRootUrl()
 
         initUserObserver()
-
         initWebViewClient()
-
-
     }
-
 
     private fun initUserObserver() {
         observerOnUser = Observer {
@@ -107,6 +106,20 @@ class PreloaderFragment : Fragment() {
 
                 super.onReceivedError(view, request, error)
             }
+
+            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                if (URLUtil.isNetworkUrl(url)) {
+                    return false
+                }
+                try {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                    startActivity(intent)
+                } catch (e: Exception){
+                    Log.d("err","ERROR! $e")
+                }
+
+                return true
+            }
         }
     }
 
@@ -132,11 +145,25 @@ class PreloaderFragment : Fragment() {
             settings.databaseEnabled = true
             settings.minimumFontSize = 1
             settings.minimumLogicalFontSize = 1
+            setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+                if (keyCode == KEYCODE_BACK && event.action == ACTION_UP) {
+                    //Perform Code
+                    if (this.canGoBack()) {
+                        this.goBack()
+                    } else {
+                        APP_ACTIVITY.navController.popBackStack()
+                        APP_ACTIVITY.finish()
+                    }
+                    return@OnKeyListener true
+                }
+                false
+            })
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        binding.webView.destroy()
         nullableBinding = null
     }
 }
