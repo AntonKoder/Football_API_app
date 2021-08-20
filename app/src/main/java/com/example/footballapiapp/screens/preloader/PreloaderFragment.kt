@@ -166,7 +166,6 @@ class PreloaderFragment : Fragment() {
             settings.minimumLogicalFontSize = 1
             setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
                 if (keyCode == KEYCODE_BACK && event.action == ACTION_UP) {
-                    // Perform Code
                     if (this.canGoBack()) {
                         this.goBack()
                     } else {
