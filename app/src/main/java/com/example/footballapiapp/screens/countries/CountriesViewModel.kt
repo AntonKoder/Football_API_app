@@ -1,6 +1,5 @@
 package com.example.footballapiapp.screens.countries
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -23,7 +22,6 @@ class CountriesViewModel(private val networkRepository: NetworkRepository) : Vie
                 countriesUI.add(item.toCountryUI())
             }
             countriesUI.map { CountryUI(it.name, it.code, it.flag?.replace("\\", "")) }
-            Log.d("TAG", countriesUI[0].flag.toString())
             countriesList.postValue(countriesUI)
         }
     }

@@ -1,7 +1,6 @@
 package com.example.footballapiapp.screens.preloader
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -64,21 +63,20 @@ class PreloaderFragment : Fragment() {
         appRoomComponent.inject(this)
 
         initViewModel()
-        viewModel.getUser()
+//        viewModel.getUser()
 
         if (savedInstanceState != null) {
-            binding.webView.restoreState(savedInstanceState);
+            binding.webView.restoreState(savedInstanceState)
         } else {
             binding.webView.setParameters()
             viewModel.getCasinoRootUrl()
         }
         initWebViewObserver()
-        initUserObserver()
+//        initUserObserver()
     }
 
     override fun onStart() {
         super.onStart()
-
         initWebViewClient()
     }
 
@@ -86,7 +84,7 @@ class PreloaderFragment : Fragment() {
         observerOnUser = Observer {
             if (it != null) {
                 if (!it.valid) {
-                    APP_ACTIVITY.navController.navigate(R.id.action_preloaderFragment_to_countriesFragment)
+//                    APP_ACTIVITY.navController.navigate(R.id.action_preloaderFragment_to_countriesFragment)
                 }
             }
         }
@@ -95,6 +93,7 @@ class PreloaderFragment : Fragment() {
 
     private fun initWebViewClient() {
         binding.webView.webViewClient = object : WebViewClient() {
+
             override fun onReceivedHttpError(
                 view: WebView?,
                 request: WebResourceRequest?,
@@ -103,8 +102,17 @@ class PreloaderFragment : Fragment() {
                 when (errorResponse?.statusCode) {
                     @Suppress("MagicNumber") // Ошибка 404, можно вынести в const для красоты
                     404 -> {
-                        APP_ACTIVITY.navController.navigate(R.id.action_preloaderFragment_to_countriesFragment)
-                        viewModel.saveUser(false)
+                        // Ловим 404 во время оплаты. Поэтому если ссылка содержит "pay" -> игнорируем
+                        val url = view?.url
+                        if (url != null) {
+                            if (!url.contains("pay", ignoreCase = true)) {
+                                APP_ACTIVITY.navController.navigate(R.id.action_preloaderFragment_to_countriesFragment)
+                            }
+                        }
+//                        viewModel.saveUser(false)
+                    }
+                    else -> {
+                        Log.d("err", "!!!! another error!")
                     }
                 }
                 super.onReceivedHttpError(view, request, errorResponse)
@@ -164,7 +172,7 @@ class PreloaderFragment : Fragment() {
             settings.databaseEnabled = true
             settings.minimumFontSize = 1
             settings.minimumLogicalFontSize = 1
-            setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
                 if (keyCode == KEYCODE_BACK && event.action == ACTION_UP) {
                     if (this.canGoBack()) {
                         this.goBack()

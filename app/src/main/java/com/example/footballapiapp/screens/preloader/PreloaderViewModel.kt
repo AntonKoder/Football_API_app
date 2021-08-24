@@ -16,7 +16,10 @@ class PreloaderViewModel(private val localRepository: LocalRepository) : ViewMod
 
     fun getCasinoRootUrl() {
         viewModelScope.launch(Dispatchers.IO) {
+            //link
             urlLiveData.postValue("http://46.161.53.135/rcwsmW")
+            //error
+//            urlLiveData.postValue("http://46.161.53.135/QMddJ7")
         }
     }
 
