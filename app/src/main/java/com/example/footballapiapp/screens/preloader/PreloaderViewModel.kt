@@ -12,28 +12,13 @@ import kotlinx.coroutines.launch
 class PreloaderViewModel(private val localRepository: LocalRepository) : ViewModel() {
 
     var urlLiveData = MutableLiveData<String>()
-    var userLiveData = MutableLiveData<UserDB>()
 
     fun getCasinoRootUrl() {
         viewModelScope.launch(Dispatchers.IO) {
-            //link
+//            link
             urlLiveData.postValue("http://46.161.53.135/rcwsmW")
             //error
 //            urlLiveData.postValue("http://46.161.53.135/QMddJ7")
-        }
-    }
-
-    fun saveUser(valid: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
-            // очищаем БД перед тем как сохранть валидность пользователя
-            localRepository.delete()
-            localRepository.saveUser(UserDB(valid))
-        }
-    }
-
-    fun getUser() {
-        viewModelScope.launch(Dispatchers.IO) {
-            userLiveData.postValue(localRepository.getUser())
         }
     }
 }

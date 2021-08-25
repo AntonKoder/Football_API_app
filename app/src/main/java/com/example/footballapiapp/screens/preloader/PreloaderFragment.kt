@@ -4,18 +4,16 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper.getMainLooper
 import android.util.Log
 import android.view.KeyEvent.ACTION_UP
 import android.view.KeyEvent.KEYCODE_BACK
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.*
 import android.view.ViewGroup
-import android.webkit.URLUtil
-import android.webkit.WebResourceError
-import android.webkit.WebResourceRequest
-import android.webkit.WebResourceResponse
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -28,6 +26,7 @@ import com.example.footballapiapp.models.local.UserDB
 import com.example.footballapiapp.repository.local.LocalRepository
 import javax.inject.Inject
 
+
 class PreloaderFragment : Fragment() {
 
     @Inject
@@ -39,7 +38,6 @@ class PreloaderFragment : Fragment() {
     private val binding get() = nullableBinding!!
 
     private lateinit var observerOnUrl: Observer<String>
-    private lateinit var observerOnUser: Observer<UserDB>
 
     lateinit var application: MyApplication
 
@@ -63,7 +61,6 @@ class PreloaderFragment : Fragment() {
         appRoomComponent.inject(this)
 
         initViewModel()
-//        viewModel.getUser()
 
         if (savedInstanceState != null) {
             binding.webView.restoreState(savedInstanceState)
@@ -72,23 +69,11 @@ class PreloaderFragment : Fragment() {
             viewModel.getCasinoRootUrl()
         }
         initWebViewObserver()
-//        initUserObserver()
     }
 
     override fun onStart() {
         super.onStart()
         initWebViewClient()
-    }
-
-    private fun initUserObserver() {
-        observerOnUser = Observer {
-            if (it != null) {
-                if (!it.valid) {
-//                    APP_ACTIVITY.navController.navigate(R.id.action_preloaderFragment_to_countriesFragment)
-                }
-            }
-        }
-        viewModel.userLiveData.observe(this, observerOnUser)
     }
 
     private fun initWebViewClient() {
@@ -106,13 +91,13 @@ class PreloaderFragment : Fragment() {
                         val url = view?.url
                         if (url != null) {
                             if (!url.contains("pay", ignoreCase = true)) {
-                                APP_ACTIVITY.navController.navigate(R.id.action_preloaderFragment_to_countriesFragment)
+                                Log.d("HTML", "catch 404 error")
+                                //тут нужный перехват не сработает
                             }
                         }
-//                        viewModel.saveUser(false)
                     }
                     else -> {
-                        Log.d("err", "!!!! another error!")
+                        Log.d("err", "catch another error!")
                     }
                 }
                 super.onReceivedHttpError(view, request, errorResponse)
@@ -120,6 +105,24 @@ class PreloaderFragment : Fragment() {
 
             override fun onPageFinished(view: WebView?, url: String) {
                 super.onPageFinished(view, url)
+                Handler(getMainLooper()).postDelayed({
+                    view!!.evaluateJavascript(
+                        "(function() { return ('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>'); })();",
+                        ValueCallback<String?> { html ->
+                            if (html != null) {
+                                Log.d("HTML", html.length.toString() + " post")
+                                if (html.contains("ERR_HTTP") || (html.length < 1000)) {
+                                    view.visibility = INVISIBLE
+                                    APP_ACTIVITY.navController.navigate(R.id.action_preloaderFragment_to_countriesFragment)
+                                } else {
+                                    view.visibility = VISIBLE
+                                    binding.progressBar.visibility = GONE
+                                }
+                            }
+                        })
+                }, 2000)
+
+
             }
 
             override fun onReceivedError(
