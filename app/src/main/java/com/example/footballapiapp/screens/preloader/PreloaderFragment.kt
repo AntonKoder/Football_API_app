@@ -162,7 +162,7 @@ class PreloaderFragment : Fragment() {
 
     private fun initViewModel() {
         val vm: PreloaderViewModel by viewModels {
-            PreloaderViewModelFactory(localRepository)
+            PreloaderViewModelFactory(localRepository, application)
         }
         viewModel = vm
     }

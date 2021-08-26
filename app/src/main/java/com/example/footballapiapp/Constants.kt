@@ -2,3 +2,5 @@ package com.example.footballapiapp
 
 const val TEAM = "team"
 const val SEASON = "season"
+const val GLOBAL_LINK = "GLOBAL_LINK"
+const val GLOBAL_UID = "GLOBAL_UID"
