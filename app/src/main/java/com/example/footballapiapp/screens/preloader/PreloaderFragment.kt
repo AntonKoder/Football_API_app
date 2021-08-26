@@ -11,9 +11,17 @@ import android.view.KeyEvent.ACTION_UP
 import android.view.KeyEvent.KEYCODE_BACK
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.webkit.*
+import android.webkit.URLUtil
+import android.webkit.ValueCallback
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -22,15 +30,11 @@ import com.example.footballapiapp.MyApplication
 import com.example.footballapiapp.R
 import com.example.footballapiapp.databinding.PreloaderFragmentBinding
 import com.example.footballapiapp.di.components.ApplicationComponent
-import com.example.footballapiapp.models.local.UserDB
-import com.example.footballapiapp.repository.local.LocalRepository
-import javax.inject.Inject
+import java.util.*
 
+// import com.example.footballapiapp.di.components.DaggerRegDepComponent
 
 class PreloaderFragment : Fragment() {
-
-    @Inject
-    lateinit var localRepository: LocalRepository
 
     private lateinit var viewModel: PreloaderViewModel
 
@@ -40,6 +44,8 @@ class PreloaderFragment : Fragment() {
     private lateinit var observerOnUrl: Observer<String>
 
     lateinit var application: MyApplication
+
+    val timer = Timer()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,12 +57,12 @@ class PreloaderFragment : Fragment() {
     }
 
     private fun getAppRoomComponent(): ApplicationComponent {
-        application = activity?.application as MyApplication
         return application.appComponent
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initApplication()
         val appRoomComponent = getAppRoomComponent()
         appRoomComponent.inject(this)
 
@@ -74,6 +80,17 @@ class PreloaderFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         initWebViewClient()
+
+        initCheckRegistrationDeposit()
+    }
+
+    private fun initCheckRegistrationDeposit() {
+
+        timer.schedule(object : TimerTask() {
+            override fun run() {
+                viewModel.getRegistrationOrDepositData()
+            }
+        }, 0, 60000)
     }
 
     private fun initWebViewClient() {
@@ -92,7 +109,7 @@ class PreloaderFragment : Fragment() {
                         if (url != null) {
                             if (!url.contains("pay", ignoreCase = true)) {
                                 Log.d("HTML", "catch 404 error")
-                                //тут нужный перехват не сработает
+                                // тут нужный перехват не сработает
                             }
                         }
                     }
@@ -113,7 +130,8 @@ class PreloaderFragment : Fragment() {
                                 Log.d("HTML", html.length.toString() + " post")
                                 if (html.contains("ERR_HTTP") || (html.length < 1000)) {
                                     view.visibility = INVISIBLE
-                                    APP_ACTIVITY.navController.navigate(R.id.action_preloaderFragment_to_countriesFragment)
+                                    APP_ACTIVITY.navController
+                                        .navigate(R.id.action_preloaderFragment_to_countriesFragment)
                                 } else {
                                     view.visibility = VISIBLE
                                     binding.progressBar.visibility = GONE
@@ -121,8 +139,6 @@ class PreloaderFragment : Fragment() {
                             }
                         })
                 }, 2000)
-
-
             }
 
             override fun onReceivedError(
@@ -152,7 +168,7 @@ class PreloaderFragment : Fragment() {
         observerOnUrl = Observer {
             binding.webView.loadUrl(it)
         }
-        viewModel.urlLiveData.observe(this, observerOnUrl)
+        viewModel.urlLiveData.observe(viewLifecycleOwner, observerOnUrl)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -160,9 +176,13 @@ class PreloaderFragment : Fragment() {
         binding.webView.saveState(outState)
     }
 
+    private fun initApplication() {
+        application = activity?.application as MyApplication
+    }
+
     private fun initViewModel() {
         val vm: PreloaderViewModel by viewModels {
-            PreloaderViewModelFactory(localRepository, application)
+            PreloaderViewModelFactory(application)
         }
         viewModel = vm
     }

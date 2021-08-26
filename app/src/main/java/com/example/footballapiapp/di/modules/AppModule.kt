@@ -1,7 +1,6 @@
 package com.example.footballapiapp.di.modules
 
 import android.app.Application
-import android.content.Context
 import com.example.footballapiapp.di.dependencies.LocalRepoImpl
 import com.example.footballapiapp.repository.local.AppDatabase
 import com.example.footballapiapp.repository.local.Dao
@@ -28,12 +27,6 @@ class AppModule(val application: Application) {
     @Provides
     @Singleton
     fun getRoomDbInstance(): AppDatabase {
-        return AppDatabase.getAppDatabaseInstance(provideAppContext())
-    }
-
-    @Provides
-    @Singleton
-    fun provideAppContext(): Context {
-        return application.applicationContext
+        return AppDatabase.getAppDatabaseInstance(application.applicationContext)
     }
 }
