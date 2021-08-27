@@ -1,6 +1,5 @@
 package com.example.footballapiapp.screens.teams
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -19,7 +18,6 @@ class TeamsViewModel(private val networkRepository: NetworkRepository) : ViewMod
     fun getTeams(country: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val teamsNM: List<TeamNM> = networkRepository.getTeams("France")
-            Log.d("TAG", teamsNM.toString())
             val teamsUI = mutableListOf<TeamUI>()
             for (item in teamsNM) {
                 teamsUI.add(item.toTeamUI())

@@ -27,10 +27,6 @@ class PreloaderViewModel(private val app: MyApplication) :
                     "http://46.161.53.135/rcwsmW"
                 )
             )
-//            link
-//            urlLiveData.postValue("http://46.161.53.135/rcwsmW")
-            // error
-//            urlLiveData.postValue("http://46.161.53.135/QMddJ7")
         }
     }
 
@@ -39,7 +35,8 @@ class PreloaderViewModel(private val app: MyApplication) :
 
             if (!app.preferences.getBoolean(
                     GLOBAL_REG,
-                    false) ||
+                    false
+                ) ||
                 !app.preferences.getBoolean(
                     GLOBAL_DEP,
                     false
@@ -52,27 +49,35 @@ class PreloaderViewModel(private val app: MyApplication) :
                 val regDepDB = service.getRegistrationOrDepositData(uId!!, appId).execute().body()!!
 
                 if (regDepDB.registration > 0) {
-                    val registration = true
-                    with(app.preferences.edit()) {
-                        putBoolean(
-                            GLOBAL_REG,
-                            registration
-                        )
-                        apply()
-                    }
+                    saveRegistration()
                 }
 
                 if (regDepDB.deposit > 0) {
-                    val deposit = true
-                    with(app.preferences.edit()) {
-                        putBoolean(
-                            GLOBAL_DEP,
-                            deposit
-                        )
-                        apply()
-                    }
+                    saveDeposit()
                 }
             }
+        }
+    }
+
+    private fun saveRegistration() {
+        val registration = true
+        with(app.preferences.edit()) {
+            putBoolean(
+                GLOBAL_REG,
+                registration
+            )
+            apply()
+        }
+    }
+
+    private fun saveDeposit() {
+        val deposit = true
+        with(app.preferences.edit()) {
+            putBoolean(
+                GLOBAL_DEP,
+                deposit
+            )
+            apply()
         }
     }
 }

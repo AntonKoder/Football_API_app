@@ -38,7 +38,11 @@ class CountriesAdapter : RecyclerView.Adapter<CountriesAdapter.CountryViewHolder
         if (
             listCountries[position].flag != null
         ) {
-            GlideToVectorYou.justLoadImage(APP_ACTIVITY, listCountries[position].flag?.toUri(), holder.flag)
+            GlideToVectorYou.justLoadImage(
+                APP_ACTIVITY,
+                listCountries[position].flag?.toUri(),
+                holder.flag
+            )
         }
     }
 

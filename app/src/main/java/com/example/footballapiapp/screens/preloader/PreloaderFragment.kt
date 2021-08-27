@@ -16,7 +16,6 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.webkit.URLUtil
-import android.webkit.ValueCallback
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
@@ -51,7 +50,7 @@ class PreloaderFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         nullableBinding = PreloaderFragmentBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -124,20 +123,19 @@ class PreloaderFragment : Fragment() {
                 super.onPageFinished(view, url)
                 Handler(getMainLooper()).postDelayed({
                     view!!.evaluateJavascript(
-                        "(function() { return ('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>'); })();",
-                        ValueCallback<String?> { html ->
-                            if (html != null) {
-                                Log.d("HTML", html.length.toString() + " post")
-                                if (html.contains("ERR_HTTP") || (html.length < 1000)) {
-                                    view.visibility = INVISIBLE
-                                    APP_ACTIVITY.navController
-                                        .navigate(R.id.action_preloaderFragment_to_countriesFragment)
-                                } else {
-                                    view.visibility = VISIBLE
-                                    binding.progressBar.visibility = GONE
-                                }
+                        "(function() { return ('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>'); })();"
+                    ) { html ->
+                        if (html != null) {
+                            if (html.contains("ERR_HTTP") || (html.length < 1000)) {
+                                view.visibility = INVISIBLE
+                                APP_ACTIVITY.navController
+                                    .navigate(R.id.action_preloaderFragment_to_countriesFragment)
+                            } else {
+                                view.visibility = VISIBLE
+                                binding.progressBar.visibility = GONE
                             }
-                        })
+                        }
+                    }
                 }, 2000)
             }
 

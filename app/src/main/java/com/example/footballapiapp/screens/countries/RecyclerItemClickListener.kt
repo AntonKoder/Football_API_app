@@ -12,7 +12,6 @@ class RecyclerItemClickListener(
     private val mListener: OnItemClickListener?
 ) : RecyclerView.OnItemTouchListener {
 
-    // отслеживает какой жест использем (держим или кликаем)
     private var gestureDetector: GestureDetector =
         GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
 

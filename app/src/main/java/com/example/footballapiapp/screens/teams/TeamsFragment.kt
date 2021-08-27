@@ -36,7 +36,7 @@ class TeamsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         nullableBinding = TeamsFragmentBinding.inflate(layoutInflater, container, false)
         return binding.root
     }

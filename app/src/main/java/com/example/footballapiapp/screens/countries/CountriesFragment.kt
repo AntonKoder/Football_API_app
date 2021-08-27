@@ -40,7 +40,7 @@ class CountriesFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         nullableBinding = CountriesFragmentBinding.inflate(layoutInflater, container, false)
         return binding.root
     }

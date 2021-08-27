@@ -14,7 +14,10 @@ import retrofit2.http.Query
 
 interface RegDepService {
     @GET("apyag4/check.php")
-    fun getRegistrationOrDepositData(@Query("uid") userId: String, @Query("bundle") appIdentifier: String): Call<RegDepNM>
+    fun getRegistrationOrDepositData(
+        @Query("uid") userId: String,
+        @Query("bundle") appIdentifier: String
+    ): Call<RegDepNM>
 
     companion object {
         operator fun invoke(): RegDepService {
